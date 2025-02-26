@@ -345,6 +345,9 @@ async def initialize_container(
     services_db = await EXIT_STACK.enter_async_context(
         JSONFileDocumentDatabase(c[Logger], PARLANT_HOME_DIR / "services.json")
     )
+    glossary_tags_db = await EXIT_STACK.enter_async_context(
+        JSONFileDocumentDatabase(c[Logger], PARLANT_HOME_DIR / "glossary_tags.json")
+    )
 
     try:
         c[AgentStore] = await EXIT_STACK.enter_async_context(AgentDocumentStore(agents_db, migrate))
@@ -405,9 +408,10 @@ async def initialize_container(
         embedder_factory = EmbedderFactory(c)
         c[GlossaryStore] = await EXIT_STACK.enter_async_context(
             GlossaryVectorStore(
-                await EXIT_STACK.enter_async_context(
+                vector_db=await EXIT_STACK.enter_async_context(
                     ChromaDatabase(c[Logger], PARLANT_HOME_DIR, embedder_factory),
                 ),
+                document_db=glossary_tags_db,
                 embedder_type=type(await nlp_service.get_embedder()),
                 embedder_factory=embedder_factory,
             )
