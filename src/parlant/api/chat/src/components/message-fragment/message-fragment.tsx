@@ -21,7 +21,7 @@ const MessageFragment = ({fragment}: {fragment: {id: string; value: string}}) =>
 			<Tooltip value='Copy' side='top'>
 				<div
 					onClick={(e) => copy(fragment.id || '', e.currentTarget)}
-					className='hidden absolute right-[10px] top-[10px] cursor-pointer size-[28px] group-hover:flex justify-center items-center bg-white hover:bg-[#F3F5F9] border border-[#EEEEEE] hover:border-[#E9EBEF] rounded-[6px]'>
+					className='hidden absolute right-[10px] top-[8px] cursor-pointer size-[28px] group-hover:flex justify-center items-center bg-white hover:bg-[#F3F5F9] border border-[#EEEEEE] hover:border-[#E9EBEF] rounded-[6px]'>
 					<img src='icons/copy.svg' alt='' />
 				</div>
 			</Tooltip>
